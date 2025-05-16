@@ -13,6 +13,11 @@
 \RequirePackage{xifthen}
 
 %%
+% In order to fix the sc heading on the luatex and xetex engines we need to check if these engines are present
+\RequirePackage{ifluatex, ifxetex}
+
+
+%%
 % Define some shortcut macros for error/warning/info logging.
 \RequirePackage{hardwrap}
 \GenerateClassLogMacros[@tufte]{\@tufte@pkgname}
@@ -302,7 +307,7 @@
   \setboolean{@tufte@luatex}{false}
 }
 
-\ifthenelse{\boolean{@tufte@luatex}}{%
+\ifthenelse{\boolean{@tufte@loadfonts}\AND\boolean{@tufte@luatex}}{%
   \RequirePackage{fontspec}
   \RequirePackage[osf,sc]{mathpazo}
   \setmainfont[Renderer=Basic, Numbers=OldStyle, Scale = 1.0]{TeX Gyre Pagella}
@@ -2018,6 +2023,20 @@
   {\input{tufte-common-local.tex}%
    \@tufte@info@noline{Loading tufte-common-local.tex}}
   {}
+
+
+%%
+% Redefinitions for luatex and xetex engines
+\ifx\ifxetex\ifluatex\else
+  \newcommand{\textls}[2][5]{%
+    \begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup
+  }
+  \renewcommand{\allcapsspacing}[1]{\textls[15]{#1}}
+  \renewcommand{\smallcapsspacing}[1]{\textls[10]{#1}}
+  \renewcommand{\allcaps}[1]{\textls[15]{\MakeTextUppercase{#1}}}
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+\fi
 
 
 %%
