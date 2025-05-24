@@ -1575,11 +1575,11 @@
   \let\@@author\@empty
   \let\@@date\@empty
   \ifthenelse{\boolean{@tufte@sfsidenotes}}{%
-    \gdef\@@title{\sffamily\Large\allcaps{\@title}\par}%
+    \gdef\@@title{\sffamily\LARGE\allcaps{\@title}\par}%
     \gdef\@@author{\sffamily\small\allcaps{\@author}\par}%
     \gdef\@@date{\sffamily\small\allcaps{\@date}\par}%
   }{%
-    \gdef\@@title{\Large\@title\par}%
+    \gdef\@@title{\LARGE\@title\par}%
     \gdef\@@author{\small\@author\par}%
     \gdef\@@date{\small\@date\par}%
   }%
