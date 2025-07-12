@@ -20,6 +20,8 @@
 % Prevent command clash with microtype...
 \RequirePackage{etoolbox}
 
+\RequirePackage{tabularx}
+
 %%
 % Define some shortcut macros for error/warning/info logging.
 \RequirePackage{hardwrap}
@@ -844,7 +846,8 @@
 %%
 % Color
 \RequirePackage[dvipsnames,svgnames]{xcolor}% load before bidi
-
+\definecolor{tablecolor}{HTML}{484444}
+\definecolor{gold}{HTML}{fab434}
 %%
 % Load the bidi package if instructed to do so.  This package must be loaded
 % prior to our redefining the \footnote and \cite commands.
