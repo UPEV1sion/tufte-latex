@@ -129,6 +129,20 @@
 \DeclareOptionX[tufte]<common>{nohyper}{\setboolean{@tufte@loadhyper}{false}}
 
 %%
+% `vdqi' option use the titlepage style of vdqi
+\newcommand{\@tufte@titlepagestyle}{vdqi} % 
+\define@choicekey*+[tufte]{common}{titlepagestyle}[\@tufte@kvtext\@tufte@kvnum]{vdqi,be}[vdqi]{%
+  \ifcase\@tufte@kvnum
+    \renewcommand{\@tufte@titlepagestyle}{vdqi}% 0
+  \or
+    \renewcommand{\@tufte@titlepagestyle}{be}% 1
+  \fi
+}{%
+  \@tufte@warning@noline{Invalid option `#1' for titlepagestyle. Must be one of: vdqi, be}%
+  \renewcommand{\@tufte@titlepagestyle}{vdqi}%
+}
+
+%%
 % `sidenote', `marginnote', `caption', `citation', `marginals' options
 % Each allows one of {justified,raggedleft,raggedright,raggedouter,auto}.
 
@@ -1544,9 +1558,23 @@
 
 
 %%
-% Produces a full title page
+% Define title page styles
 
-\newcommand{\maketitlepage}[0]{%
+\newcommand{\@tufte@vdqi@titlepage}{%
+  \begingroup%
+  \setlength{\parindent}{0pt}%
+  {\fontsize{24}{24}\selectfont\textit{\@author}\par}
+  \vspace{1.75in}
+  {\fontsize{36}{54}\selectfont\@title\par}
+  \vspace{0.5in}
+  {\fontsize{14}{14}\selectfont\textsf{\smallcaps{\@date}}\par}
+  \vfill
+  {\fontsize{14}{14}\selectfont\textit{\@publisher}\par}
+  \thispagestyle{empty}
+  \endgroup
+}
+
+\newcommand{\@tufte@be@titlepage}{%
   \cleardoublepage%
   {%
     \sffamily%
@@ -1563,43 +1591,47 @@
 }
 
 %%
-% Title block
+% Selects appropriate title page style
 
-\renewcommand{\maketitle}{%
-  \newpage
-  \global\@topnum\z@% prevent floats from being placed at the top of the page
-  \begingroup
-  \setlength{\parindent}{0pt}%
-  \setlength{\parskip}{4pt}%
-  \let\@@title\@empty
-  \let\@@author\@empty
-  \let\@@date\@empty
-  \ifthenelse{\boolean{@tufte@sfsidenotes}}{%
-    \gdef\@@title{\sffamily\LARGE\allcaps{\@title}\par}%
-    \gdef\@@author{\sffamily\small\allcaps{\@author}\par}%
-    \gdef\@@date{\sffamily\small\allcaps{\@date}\par}%
-  }{%
-    \gdef\@@title{\LARGE\@title\par}%
-    \gdef\@@author{\small\@author\par}%
-    \gdef\@@date{\small\@date\par}%
-  }%
-  \@@title
-  \@@author
-  \@@date
-  \endgroup
-  \thispagestyle{plain}% suppress the running head
-  \tuftebreak% add some space before the text begins
-  \@afterindentfalse\@afterheading% suppress indentation of the next paragraph
+\newcommand{\maketitlepage}{%
+  \ifthenelse{\equal{\@tufte@titlepagestyle}{vdqi}}%
+    {\@tufte@vdqi@titlepage}%
+    {\@tufte@be@titlepage}%
 }
 
-
 %%
-% Title page (if the `titlepage' option was passed to the tufte-handout
-% class.)
+% \maketitle depends on `titlepage` option
 
-\ifthenelse{\boolean{@tufte@titlepage}}
-{\renewcommand{\maketitle}{\maketitlepage}}
-{}
+\ifthenelse{\boolean{@tufte@titlepage}}{%
+  \renewcommand{\maketitle}{\maketitlepage}%
+}{%
+  \renewcommand{\maketitle}{%
+    \newpage
+    \global\@topnum\z@% prevent floats from being placed at the top of the page
+    \begingroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{4pt}%
+    \let\@@title\@empty
+    \let\@@author\@empty
+    \let\@@date\@empty
+    \ifthenelse{\boolean{@tufte@sfsidenotes}}{%
+      \gdef\@@title{\sffamily\LARGE\allcaps{\@title}\par}%
+      \gdef\@@author{\sffamily\small\allcaps{\@author}\par}%
+      \gdef\@@date{\sffamily\small\allcaps{\@date}\par}%
+    }{%
+      \gdef\@@title{\LARGE\@title\par}%
+      \gdef\@@author{\small\@author\par}%
+      \gdef\@@date{\small\@date\par}%
+    }%
+    \@@title
+    \@@author
+    \@@date
+    \endgroup
+    \thispagestyle{plain}%
+    \tuftebreak%
+    \@afterindentfalse\@afterheading%
+  }%
+}
 
 %%
 % When \cleardoublepage is called, produce a blank (empty) page -- i.e.,
@@ -2046,6 +2078,11 @@
 \fi
 
 \linespread{1.15}
+
+\setlength{\parindent}{0pt}
+\setlength{\RaggedRightParindent}{0pt}
+\setlength{\JustifyingParindent}{0pt}
+\setlength{\parskip}{1em}
 
 %%
 % End of file
