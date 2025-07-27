@@ -848,6 +848,7 @@
 \RequirePackage[dvipsnames,svgnames]{xcolor}% load before bidi
 \definecolor{tablecolor}{HTML}{484444}
 \definecolor{gold}{HTML}{fab434}
+\definecolor{textcolor}{HTML}{231F20}
 %%
 % Load the bidi package if instructed to do so.  This package must be loaded
 % prior to our redefining the \footnote and \cite commands.
@@ -2080,12 +2081,14 @@
   \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
 \fi
 
-\linespread{1.15}
+\linespread{1.2}
 
 \setlength{\parindent}{0pt}
 \setlength{\RaggedRightParindent}{0pt}
 \setlength{\JustifyingParindent}{0pt}
 \setlength{\parskip}{1em}
+
+\color{textcolor}
 
 %%
 % End of file
