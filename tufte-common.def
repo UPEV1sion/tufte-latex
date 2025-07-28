@@ -2090,6 +2090,10 @@
 
 \color{textcolor}
 
+\AtBeginDocument{%
+    \fontsize{8.5}{11.7}\selectfont
+}
+
 %%
 % End of file
 \endinput
