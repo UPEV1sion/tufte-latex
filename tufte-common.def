@@ -1571,7 +1571,7 @@
   \vspace{1.75in}
   {\fontsize{36}{54}\selectfont\@title\par}
   \vspace{0.5in}
-  {\fontsize{14}{14}\selectfont\textsf{\smallcaps{\@date}}\par}
+  {\fontsize{14}{14}\selectfont\textsf{\allcaps{\@date}}\par}
   \vfill
   {\fontsize{14}{14}\selectfont\textit{\@publisher}\par}
   \thispagestyle{empty}
