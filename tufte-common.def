@@ -356,6 +356,10 @@
 }
 
 %%
+% The imakeidx package must be loaded before hyperref
+\RequirePackage{imakeidx}
+
+%%
 % The titlesec and titletoc packages are used to change the style of the
 % section headings.  These packages should be loaded before the hyperref
 % package.
@@ -1569,7 +1573,7 @@
   \setlength{\parindent}{0pt}%
   {\fontsize{24}{24}\selectfont\textit{\@author}\par}
   \vspace{1.75in}
-  {\fontsize{36}{54}\selectfont\@title\par}
+  {\fontsize{36}{54}\selectfont \protect\@title \par}
   \vspace{0.5in}
   {\fontsize{14}{14}\selectfont\textsf{\allcaps{\@date}}\par}
   \vfill
@@ -1657,7 +1661,7 @@
 \titleformat{\chapter}%
 [display]% shape
 {\relax\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\begin{fullwidth}}{}}% format applied to label+text
-    {\LARGE\thechapter}% label
+    {\LARGE\chaptername~\thechapter}% label
     {0pt}% horizontal separation between label and title body
     {\LARGE\rmfamily}% before the title body
     [\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\end{fullwidth}}{}]% after the title body
@@ -1665,7 +1669,7 @@
 \titleformat{\section}%
 [hang]% shape
 {\normalfont\Large}% format applied to label+text
-{\thesection}% label
+{}% label
 {1em}% horizontal separation between label and title body
 {}% before the title body
 []% after the title body
@@ -1673,7 +1677,7 @@
 \titleformat{\subsection}%
 [hang]% shape
 {\normalfont\large}% format applied to label+text
-{\thesubsection}% label
+{}% label
 {1em}% horizontal separation between label and title body
 {}% before the title body
 []% after the title body
@@ -1681,7 +1685,7 @@
 \titleformat{\paragraph}%
 [runin]% shape
 {\normalfont}% format applied to label+text
-{\theparagraph}% label
+{}% label
 {1em}% horizontal separation between label and title body
 {}% before the title body
 []% after the title body
